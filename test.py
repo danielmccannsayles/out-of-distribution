@@ -54,7 +54,6 @@ def cossim_deg(tensor1, tensor2):
     )
 
     coss = similarity.item()
-    print(f"intermediate: {coss}")
 
     # Clamp to valid domain for acos to handle floating-point precision errors
     coss = max(-1.0, min(1.0, coss))
