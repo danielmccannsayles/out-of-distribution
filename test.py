@@ -64,7 +64,7 @@ def cossim_deg(tensor1, tensor2):
 
 # Add some noise to a tensor, using random guassian
 # Originally was 1e-5 - that was too little of nudging.
-def nudge(tensor, nudge_magnitude=1e-3, use_random_gaussian=True):
+def nudge(tensor, nudge_magnitude=1e-4, use_random_gaussian=True):
     original_magnitude = torch.norm(tensor)
 
     # rand guass else ones
@@ -118,7 +118,7 @@ def get_conv_outputs(input_tensor):
 # Presumably this can be anything that maps flat tensors to flat tensors of the same length.
 # TODO: try on different levels, e.g. not 3 from end
 def black_box(x):
-    y = get_conv_outputs(x)[-3]
+    y = get_conv_outputs(x)[-6]
     return y
 
 
@@ -137,6 +137,7 @@ paths = [
     "./imgs/train/fish.JPEG",
     "./imgs/train/shark.JPEG",
     "./imgs/validate/snake.JPEG",
+    "./imgs/random/me.jpeg",
 ]
 
 for i in range(len(paths)):
