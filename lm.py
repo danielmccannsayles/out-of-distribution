@@ -2,15 +2,9 @@
 import math
 import textwrap
 
-import numpy as np
 import torch
 from torch.nn.functional import cosine_similarity as torch_cosine_similarity
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
-
-# torch.set_grad_enabled(False)
-# torch.use_deterministic_algorithms(True)
-# torch.manual_seed(0)
-
 
 # Load tokenizer and model
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
@@ -62,7 +56,7 @@ def nudge(tensor, nudge_magnitude=1e-2, use_random_gaussian=True):
 
 # Main func. Nudge tensor, check cossim, run through blackbox, check again
 def get_distortion_ratio(point, black_box):
-    nudged = nudge(point)
+    nudged = nudge(point, use_random_gaussian=False)
     control = cossim_deg(point, nudged)
     mapped_point = black_box(point)
     mapped_nudged = black_box(nudged)
@@ -82,10 +76,8 @@ def ood(s):
         ).logits
 
     base_embeds = gpt2.transformer.wte(tokenized.input_ids)
-    scores = [get_distortion_ratio(base_embeds, f) for _ in range(50)]
-    print(
-        f"{textwrap.shorten(s, width=30).ljust(30)} :: {np.mean(scores): .5f} ({np.std(scores):.5f})"
-    )
+    score = get_distortion_ratio(base_embeds, f)
+    print(f"{textwrap.shorten(s, width=30).ljust(30)} :: {score:.5f}")
 
 
 if __name__ == "__main__":
@@ -97,6 +89,9 @@ if __name__ == "__main__":
     ood("lsadfhl; wiffle jfdalkgy burh lgoi")
     ood(
         "Flowers, also known as blooms and blossoms, are the reproductive structures of flowering plants"
+    )
+    ood(
+        "Flowers, also known as xkgh and blossoms, are the reproductive structures of flowering plants"
     )
     ood(
         "Flowers, also known as blooms and blossoms, are the reproductive structures of flowering elephants that jump"
