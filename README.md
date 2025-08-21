@@ -26,3 +26,13 @@ The more the cos-simmilarity decreases, the more expanded reion of space you're 
 Original tweet: https://x.com/sigmoid_male
 
 Voogel tried w/ LM: https://x.com/voooooogel/status/1688730813746290688
+
+### Results:
+
+This isn't super useful.
+
+1. I can't get it tuned correctly (meaning it doesn't agree with what I assume it should, e.g. a wikipedia line tweaked slightly scores lower (more I.D. than the original))
+2. Even if it perfectly validated my assumptions, it's not testing what I hoped - if an input was used in the distribution. It just tests how dissimilar a problem is
+
+The final hope I have for this is that maybe: 3. This could provide a signal - if a model does poorly on an input, does it always correlate w/ being OOD? If it does, then not helpful (currently). If it doesn't, then maybe
+3.5. ^ this is probably a failure of my understanding. Someone knowing more would know the answer to this.
